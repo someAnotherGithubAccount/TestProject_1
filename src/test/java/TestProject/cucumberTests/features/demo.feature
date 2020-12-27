@@ -5,8 +5,7 @@ Scenario: Demonstrating how Cucumber-JVM works
     And my Java SDK is set to
     """
     Version 1.8 preferably but Version 1.9 will do the job as well
-    """ some other text which is NOT taken into consideration when creating method name
-    #This is an example of Doc Strings in Cucumber (use it when your argument is long)
+    """
     When I run it within my IDE
     Then I will be "able" to run connected step definitions
     And I will be logged as User
