@@ -15,12 +15,12 @@ public class DemoFeatureSteps {
 
     @Given("I have a configured Cucumber-JVM project")
     public void iHaveAConfiguredCucumberJVMProject() {
-        log.info("Given step");
+        log.info("Given step: I have a configured Cucumber-JVM project");
     }
 
     @When("I run it within my IDE")
     public void iRunItWithinMyIDE() {
-        log.info("When step");
+        log.info("When step: I run it within my IDE");
     }
 
     @Then("I will be able to run connected step definitions")
@@ -30,17 +30,21 @@ public class DemoFeatureSteps {
 
     @Then("I will be {string} to run connected step definitions")
     public void iWillBeToRunConnectedStepDefinitions(String arg0) {
-        log.info("When step with parameter");
+        log.info("When step with parameter: I will be \"able\" to run connected step definitions");
         log.info(arg0);
 
     }
 
     @And("I will be logged as User")
     public void iWillBeLoggedAsUser(List<User> dataTable) {
-        log.info("When list parameters");
+        log.info("When list parameter list: I will be logged as User");
         List<User> users;
         users = dataTable;
         log.info(users.toString());
     }
 
+    @And("my Java SDK is set to")
+    public void myJavaSDKIsSetTo(String longArgument) {
+        log.info("Given Step: My Java SDK is set to "+longArgument);
+    }
 }
