@@ -76,8 +76,8 @@ public class DashboardSteps extends TestBase{
                 .hasValue("Please enter a search keyword");
     }
 
-    @Then("I should see {string} results")
-    public void iShouldSeeResults(String numberOfResults) {
+    @Then("I should see {int} results")
+    public void iShouldSeeResults(int numberOfResults) {
         searchResultsCount = searchPage.getSearchResultsCount();
         String expectedResultsCount = numberOfResults+" results have been found.";
         assertThat(searchResultsCount).as("Count on Search Results page")
