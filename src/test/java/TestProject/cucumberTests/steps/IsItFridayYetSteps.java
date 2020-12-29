@@ -4,8 +4,9 @@ import TestProject.cucumberTests.models.IsItFriday;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.assertj.core.api.Assertions;
 
-import static org.testng.AssertJUnit.assertEquals;
+import static org.assertj.core.api.Assertions.*;
 
 public class IsItFridayYetSteps {
     private String today;
@@ -23,6 +24,6 @@ public class IsItFridayYetSteps {
 
     @Then("I should be told {string}")
     public void i_should_be_told(String expectedAnswer) {
-        assertEquals(expectedAnswer, actualAnswer);
+        assertThat(expectedAnswer).isEqualTo(actualAnswer);
     }
 }

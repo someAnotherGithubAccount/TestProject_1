@@ -1,4 +1,4 @@
-package TestProject.cucumberTests.dataTableConfig;
+package TestProject.cucumberTests.steps.dataTableConfig;
 
 import TestProject.cucumberTests.models.User;
 import cucumber.api.TypeRegistry;
