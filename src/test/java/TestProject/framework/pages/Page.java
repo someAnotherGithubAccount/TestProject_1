@@ -13,6 +13,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Page extends AbstractPage {
@@ -39,7 +41,7 @@ public class Page extends AbstractPage {
         return new WebDriverWait(getDriver(),10);
     }
 
-    public void waitABit(int milliseconds){
+    protected void waitABit(int milliseconds){
         try {
             Thread.sleep(milliseconds);
         }catch (InterruptedException e){ }
@@ -59,7 +61,22 @@ public class Page extends AbstractPage {
         });
     }
 
+    protected void waitForElementNotToContainsText(By locator){
+        getDefaultWait().until(new ExpectedCondition<Object>() {
+            @NullableDecl
+            @Override
+            public Object apply(@NullableDecl WebDriver driver) {
+                return driver.findElement(locator).getText().length() == 0;
+            }
+        });
+    }
+
     //UTILITY METHODS
+
+    protected void clickOn(By locator){
+        waitForElementToBePresent(locator);
+        getDriver().findElement(locator).click();
+    }
 
     protected void focusOnElement(By elementToFocus,ExecutionMethod executionMethod){
         switch (executionMethod){
@@ -76,6 +93,10 @@ public class Page extends AbstractPage {
         waitABit(500);
     }
 
+    protected String getPageHeader(){
+        By defaultHeader = By.xpath("//h1");
+        return getText(defaultHeader);
+    }
 
     //TEXT METHODS
 
@@ -84,10 +105,22 @@ public class Page extends AbstractPage {
         return getDriver().findElement(locatorWithText).getText();
     }
 
+    protected Optional<String> getTextEvenWhenEmpty(By locatorWithTextOrWithoutText) {
+        return Optional.ofNullable(getDriver().findElement(locatorWithTextOrWithoutText).getText());
+    }
+
     protected List<String> getTexts(By locatorWithText){
         waitForElementToBePresent(locatorWithText);
         List<WebElement> elementsWithText = getDriver().findElements(locatorWithText);
         return elementsWithText.stream().map(element -> element.getText()).collect(Collectors.toList());
+    }
+
+    protected void sendKeys(By inputLocator, String text){
+        waitForElementToBePresent(inputLocator);
+        WebElement inputElement = getDriver().findElement(inputLocator);
+        inputElement.clear();
+        waitForElementNotToContainsText(inputLocator);
+        inputElement.sendKeys(text);
     }
 
     public enum ExecutionMethod{

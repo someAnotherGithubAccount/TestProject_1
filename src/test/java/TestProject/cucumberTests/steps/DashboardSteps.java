@@ -8,8 +8,8 @@ import cucumber.api.java.en.When;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,6 +21,9 @@ public class DashboardSteps extends TestBase{
 
     private List<String> womenTopsSubcategories;
     private List<String> womenDressesSubcategories;
+
+    private String searchResultsCount;
+    private Optional<String> warningOnSearchResultsPage;
 
     public DashboardSteps(TestBase testBase) {
         this.testBase = testBase;
@@ -58,5 +61,26 @@ public class DashboardSteps extends TestBase{
     public void iShouldSeeDressesSubcategories(List<String> expectedDressesSubcategories) {
         womenDressesSubcategories = dashboardPage.getWomanDressesSubcategories();
         assertThat(womenDressesSubcategories).as("Woman Dresses subcategories").containsExactlyElementsOf(expectedDressesSubcategories);
+    }
+
+    @When("I search for {string}")
+    public void iSearchFor(String queryString) {
+        log.info("Searching for: "+queryString);
+        searchPage = dashboardPage.searchFor(queryString);
+    }
+
+    @And("I should see warning text")
+    public void iShouldSeeWarningText() {
+        warningOnSearchResultsPage = searchPage.getKeywordNotFoundWarning();
+        assertThat(warningOnSearchResultsPage).as("Warning on Search Results page")
+                .hasValue("Please enter a search keyword");
+    }
+
+    @Then("I should see {string} results")
+    public void iShouldSeeResults(String numberOfResults) {
+        searchResultsCount = searchPage.getSearchResultsCount();
+        String expectedResultsCount = numberOfResults+" results have been found.";
+        assertThat(searchResultsCount).as("Count on Search Results page")
+                .isEqualToIgnoringWhitespace(expectedResultsCount);
     }
 }

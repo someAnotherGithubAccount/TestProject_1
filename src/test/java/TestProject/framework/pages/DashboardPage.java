@@ -20,6 +20,9 @@ public class DashboardPage extends Page {
     private By womanSubcategoryTops = By.xpath("//div[@id='block_top_menu']//li[@class]//a[@title='Women']//following-sibling::ul//a[@title='Tops']//following-sibling::ul//li");
     private By womanSubcategoryDresses = By.xpath("//div[@id='block_top_menu']//li[@class]//a[@title='Women']//following-sibling::ul//a[@title='Dresses']//following-sibling::ul//li");
 
+    private By topSearchInput = By.xpath("//input[@id='search_query_top']");
+    private By submitSearchButton = By.xpath("//button[@name='submit_search']");
+
     public DashboardPage(WebDriver driver) {
         super(driver);
     }
@@ -55,5 +58,11 @@ public class DashboardPage extends Page {
 
     public List<String> getWomanDressesSubcategories(){
         return getTexts(womanSubcategoryDresses);
+    }
+
+    public SearchPage searchFor(String text){
+        sendKeys(topSearchInput,text);
+        clickOn(submitSearchButton);
+        return new SearchPage(getDriver());
     }
 }
