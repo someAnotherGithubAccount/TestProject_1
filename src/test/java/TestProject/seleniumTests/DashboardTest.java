@@ -10,7 +10,7 @@ public class DashboardTest extends TestBase{
     @Test
     public void someTest(){
         DashboardTest dashboardTest = new DashboardTest();
-        //dashboardPage.clickOnWomanCategory();
+        dashboardPage.clickOnWomanCategory();
         assertEquals(true, true);
     }
 }

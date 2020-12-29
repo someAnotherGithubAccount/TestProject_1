@@ -43,27 +43,20 @@ public class DashboardSteps extends TestBase{
         log.info("On page "+arg0);
     }
 
-    @Then("I should see Tops category")
-    public void iShouldSeeTopsCategory() {
-        womenTopsSubcategories = dashboardPage.getWomanTopsSubcategories();
-        List<String> tmp = new ArrayList<>();
-        tmp.add("T-shirts");
-        tmp.add("Blouses");
-        assertThat(womenTopsSubcategories).as("Woman Top subcategories").containsExactlyElementsOf(tmp);
-    }
-
-    @And("I should see Dresses category")
-    public void iShouldSeeDressesCategory() {
-        womenDressesSubcategories = dashboardPage.getWomanDressesSubcategories();
-        List<String> tmp = new ArrayList<>();
-        tmp.add("Casual Dresses");
-        tmp.add("Evening Dresses");
-        tmp.add("Summer Dresses");
-        assertThat(womenDressesSubcategories).as("Woman Dresses subcategories").containsExactlyElementsOf(tmp);
-    }
-
     @When("I open Women category")
     public void iOpenWomenCategory() {
         dashboardPage.openWomanCategory();
+    }
+
+    @Then("I should see Tops subcategories")
+    public void iShouldSeeTopsSubcategories(List<String> expectedTopSubcategories) {
+        womenTopsSubcategories = dashboardPage.getWomanTopsSubcategories();
+        assertThat(womenTopsSubcategories).as("Woman Top subcategories").containsExactlyElementsOf(expectedTopSubcategories);
+    }
+
+    @And("I should see Dresses subcategories")
+    public void iShouldSeeDressesSubcategories(List<String> expectedDressesSubcategories) {
+        womenDressesSubcategories = dashboardPage.getWomanDressesSubcategories();
+        assertThat(womenDressesSubcategories).as("Woman Dresses subcategories").containsExactlyElementsOf(expectedDressesSubcategories);
     }
 }

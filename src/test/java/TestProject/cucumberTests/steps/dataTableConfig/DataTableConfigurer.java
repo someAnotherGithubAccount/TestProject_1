@@ -17,6 +17,11 @@ public class DataTableConfigurer implements TypeRegistryConfigurer {
 
     @Override
     public void configureTypeRegistry(TypeRegistry registry) {
-        registry.defineDataTableType(new DataTableType(User.class, (TableEntryTransformer<User>) entry -> new User(entry.get("username"), entry.get("password"))));
+        registry.defineDataTableType(
+                new DataTableType(
+                        User.class,                                                                                     // type
+                        (TableEntryTransformer<User>) entry -> new User(entry.get("username"), entry.get("password"))   // transformer
+                )
+        );
     }
 }
