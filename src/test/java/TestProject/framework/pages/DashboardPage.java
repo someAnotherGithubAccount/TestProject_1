@@ -8,8 +8,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static TestProject.framework.pages.Page.ExecutionMethod.*;
@@ -28,6 +28,9 @@ public class DashboardPage extends Page {
     private By submitSearchButton = By.xpath("//button[@name='submit_search']");
 
     private By popularProducts = By.xpath("//ul[@id='homefeatured']//div[@class='right-block']");
+
+    private By popularProductsActiveTab = By.xpath("//a[@class='homefeatured']//ancestor::li[@class='active']");
+    private By bestsellersProductActiveTab = By.xpath("//a[@class='class='blockbestsellers']//ancestor::li[@class='active']");
 
     public DashboardPage(WebDriver driver) {
         super(driver);
@@ -72,10 +75,21 @@ public class DashboardPage extends Page {
         return new SearchPage(getDriver());
     }
 
-    public List<Product> getPopularProducts(){
+    public Optional<List<Product>> getPopularProducts(){
         waitForElementToBeVisible(popularProducts);
         List<WebElement> productsElements = getDriver().findElements(popularProducts);
         List<String> products = productsElements.stream().map(product -> product.getText()).collect(Collectors.toList());
         return Product.createListOfProducts(products);
+    }
+
+    public boolean isCategorySelected(String category){
+        switch (category){
+            case "Popular":
+                return isElementDisplayed(popularProductsActiveTab);
+            case "Bestsellers":
+                return isElementDisplayed(bestsellersProductActiveTab);
+            default:
+                throw new IllegalArgumentException("No such category: "+category);
+        }
     }
 }

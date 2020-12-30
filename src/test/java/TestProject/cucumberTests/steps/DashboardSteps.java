@@ -1,8 +1,8 @@
 package TestProject.cucumberTests.steps;
 
 import TestProject.cucumberTests.models.Product;
-import TestProject.cucumberTests.models.User;
 import TestProject.framework.testBase.TestBase;
+import com.google.common.collect.Iterables;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -27,7 +27,10 @@ public class DashboardSteps extends TestBase{
     private String searchResultsCount;
     private Optional<String> warningOnSearchResultsPage;
 
-    private List<Product> popularProducts;
+    private Optional<List<Product>> popularProducts;
+    private Product blouse;
+
+    private boolean isPopularCategorySelected;
 
     public DashboardSteps(TestBase testBase) {
         this.testBase = testBase;
@@ -88,10 +91,23 @@ public class DashboardSteps extends TestBase{
                 .isEqualToIgnoringWhitespace(expectedResultsCount);
     }
 
-    @Then("I should see popular Product")
-    public void iShouldSeePopularProduct(List<Product> dataTable) {
+    @Then("I should see list of products")
+    public void iShouldSeeListOfProducts(List<Product> dataTable) {
         popularProducts = dashboardPage.getPopularProducts();
-        assertThat(popularProducts).as("Products in 'Popular' category")
+        assertThat(popularProducts.get()).as("Visible products")
                 .containsExactlyElementsOf(dataTable);
+    }
+
+    @When("{string} products tab is selected")
+    public void popularProductsTabIsSelected(String category) {
+        isPopularCategorySelected = dashboardPage.isCategorySelected(category);
+        assertThat(isPopularCategorySelected).as("Is "+category+" selected?").isTrue();
+    }
+
+    @Then("I should see product")
+    public void iShouldSeeProduct(Product product) {
+        blouse = Iterables.getOnlyElement(searchPage.getFoundedProducts().get());
+        assertThat(blouse).as("Visible product")
+                .isEqualTo(product);
     }
 }

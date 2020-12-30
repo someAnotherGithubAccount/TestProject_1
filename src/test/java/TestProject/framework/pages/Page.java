@@ -14,7 +14,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Page extends AbstractPage {
@@ -101,6 +100,10 @@ public class Page extends AbstractPage {
     protected String getPageHeader(){
         By defaultHeader = By.xpath("//h1");
         return getText(defaultHeader);
+    }
+
+    protected boolean isElementDisplayed(By element){
+        return getDriver().findElement(element).isEnabled() && getDriver().findElement(element).isDisplayed();
     }
 
     //TEXT METHODS

@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Data
 public class Product {
@@ -22,7 +23,7 @@ public class Product {
         this.discount = discount;
     }
 
-    public static List<Product> createListOfProducts(List<String> listOfProducts){
+    public static Optional<List<Product>> createListOfProducts(List<String> listOfProducts){
         List<Product> productsList = new ArrayList<>();
         for(String singleProduct:listOfProducts){
             Product product = new Product();
@@ -40,6 +41,6 @@ public class Product {
             }
             productsList.add(product);
         }
-        return productsList;
+        return Optional.of(productsList);
     }
 }

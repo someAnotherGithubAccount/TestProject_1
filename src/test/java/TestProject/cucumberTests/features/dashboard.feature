@@ -25,10 +25,19 @@ Feature: Dashboard
     When I search for "dress"
     Then I should see 7 results
 
+       #Example of single POJO as parameter
+  Scenario:
+    Given I am on Dashboard page
+    When I search for "blouse"
+    Then I should see product
+      | name   | currentPrice | oldPrice | discount |
+      | Blouse | $27.00       |          |          |
+
     #Example of List of POJO as parameter
   Scenario:
     Given I am on Dashboard page
-    Then I should see popular Product
+    When 'Popular' products tab is selected
+    Then I should see list of products
       | name                        | currentPrice | oldPrice | discount |
       | Faded Short Sleeve T-shirts | $16.51       |          |          |
       | Blouse                      | $27.00       |          |          |
