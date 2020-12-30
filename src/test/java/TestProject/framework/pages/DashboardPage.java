@@ -1,12 +1,16 @@
 package TestProject.framework.pages;
 
+import TestProject.cucumberTests.models.Product;
 import TestProject.cucumberTests.steps.DashboardSteps;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static TestProject.framework.pages.Page.ExecutionMethod.*;
 
@@ -22,6 +26,8 @@ public class DashboardPage extends Page {
 
     private By topSearchInput = By.xpath("//input[@id='search_query_top']");
     private By submitSearchButton = By.xpath("//button[@name='submit_search']");
+
+    private By popularProducts = By.xpath("//ul[@id='homefeatured']//div[@class='right-block']");
 
     public DashboardPage(WebDriver driver) {
         super(driver);
@@ -64,5 +70,12 @@ public class DashboardPage extends Page {
         sendKeys(topSearchInput,text);
         clickOn(submitSearchButton);
         return new SearchPage(getDriver());
+    }
+
+    public List<Product> getPopularProducts(){
+        waitForElementToBeVisible(popularProducts);
+        List<WebElement> productsElements = getDriver().findElements(popularProducts);
+        List<String> products = productsElements.stream().map(product -> product.getText()).collect(Collectors.toList());
+        return Product.createListOfProducts(products);
     }
 }

@@ -1,5 +1,7 @@
 package TestProject.cucumberTests.steps;
 
+import TestProject.cucumberTests.models.Product;
+import TestProject.cucumberTests.models.User;
 import TestProject.framework.testBase.TestBase;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -24,6 +26,8 @@ public class DashboardSteps extends TestBase{
 
     private String searchResultsCount;
     private Optional<String> warningOnSearchResultsPage;
+
+    private List<Product> popularProducts;
 
     public DashboardSteps(TestBase testBase) {
         this.testBase = testBase;
@@ -82,5 +86,12 @@ public class DashboardSteps extends TestBase{
         String expectedResultsCount = numberOfResults+" results have been found.";
         assertThat(searchResultsCount).as("Count on Search Results page")
                 .isEqualToIgnoringWhitespace(expectedResultsCount);
+    }
+
+    @Then("I should see popular Product")
+    public void iShouldSeePopularProduct(List<Product> dataTable) {
+        popularProducts = dashboardPage.getPopularProducts();
+        assertThat(popularProducts).as("Products in 'Popular' category")
+                .containsExactlyElementsOf(dataTable);
     }
 }

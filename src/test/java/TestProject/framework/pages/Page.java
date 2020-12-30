@@ -51,6 +51,11 @@ public class Page extends AbstractPage {
         getDefaultWait().until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
+    protected void waitForElementToBeVisible(By locator){
+        getDefaultWait().until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+
     protected void waitForElementToContainsText(By locator){
         getDefaultWait().until(new ExpectedCondition<Object>() {
             @NullableDecl

@@ -1,5 +1,6 @@
 package TestProject.cucumberTests.steps.dataTableConfig;
 
+import TestProject.cucumberTests.models.Product;
 import TestProject.cucumberTests.models.User;
 import cucumber.api.TypeRegistry;
 import cucumber.api.TypeRegistryConfigurer;
@@ -21,6 +22,13 @@ public class DataTableConfigurer implements TypeRegistryConfigurer {
                 new DataTableType(
                         User.class,                                                                                     // type
                         (TableEntryTransformer<User>) entry -> new User(entry.get("username"), entry.get("password"))   // transformer
+                )
+        );
+        registry.defineDataTableType(
+                new DataTableType(
+                        Product.class,
+                        (TableEntryTransformer<Product>) entry -> new Product(entry.get("name"), entry.get("currentPrice"),
+                                entry.get("oldPrice"),entry.get("discount"))
                 )
         );
     }
