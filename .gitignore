@@ -10,4 +10,6 @@ target/
 .idea/vcs.xml
 .idea/workspace.xml
 idea/
+TestProject_1.iml
 test.py
+debug.log
