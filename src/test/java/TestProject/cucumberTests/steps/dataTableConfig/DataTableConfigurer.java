@@ -1,7 +1,6 @@
 package TestProject.cucumberTests.steps.dataTableConfig;
 
 import TestProject.cucumberTests.models.Product;
-import TestProject.cucumberTests.models.User;
 import cucumber.api.TypeRegistry;
 import cucumber.api.TypeRegistryConfigurer;
 import io.cucumber.datatable.DataTableType;
@@ -20,12 +19,6 @@ public class DataTableConfigurer implements TypeRegistryConfigurer {
 
     @Override
     public void configureTypeRegistry(TypeRegistry registry) {
-        registry.defineDataTableType(
-                new DataTableType(
-                        User.class,                                                                                     // type
-                        (TableEntryTransformer<User>) entry -> new User(entry.get("username"), entry.get("password"))   // transformer
-                )
-        );
         registry.defineDataTableType(
                 new DataTableType(
                         Product.class,
