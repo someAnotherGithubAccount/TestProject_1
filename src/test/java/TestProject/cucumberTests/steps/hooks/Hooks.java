@@ -4,6 +4,7 @@ import TestProject.framework.pages.Page;
 import TestProject.framework.testBase.*;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -20,7 +21,7 @@ public class Hooks extends TestBase {
     @Before
     public void setUpTestBase(){
         log.info("Setting up Chrome Driver...");
-        System.setProperty("webdriver.chrome.driver", "executables/chromedriver.exe");
+        WebDriverManager.chromedriver().setup();
         testBase.page  = new Page(new ChromeDriver());
     }
 

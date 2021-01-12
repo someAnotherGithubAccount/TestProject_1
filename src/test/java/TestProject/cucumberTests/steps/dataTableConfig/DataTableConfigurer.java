@@ -9,6 +9,8 @@ import io.cucumber.datatable.TableEntryTransformer;
 
 import java.util.Locale;
 
+//There can be only 1 TypeRegistryConfigurer in Cucumber project
+//We can define multiple DataTable types in this class
 public class DataTableConfigurer implements TypeRegistryConfigurer {
 
     @Override
